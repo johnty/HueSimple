@@ -6,6 +6,7 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QTimer>
+#include <QThread>
 #include "RtMidi.h"
 
 //put IP address and API key for Hue bridge here:
@@ -71,6 +72,7 @@ int main(int argc, char *argv[])
     while (1)
     {
         //do midi object poll
+        QThread::msleep(1); //don't use 100% cpu
         double tstamp = midiIn->getMessage(&message);
 
         if (message.size() == 3)
@@ -79,7 +81,7 @@ int main(int argc, char *argv[])
                         << message.at(1) <<" "
                            << message.at(2);
 
-            bri0 = message.at(2);
+            bri0 = 127 - message.at(2);
             bri1 = bri0;
             bri = bri0 + bri1; //kind of filter here...
         }
