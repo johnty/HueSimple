@@ -111,6 +111,7 @@ int main(int argc, char *argv[])
                     {
                         setLightOn(true, lights[i], manager);
                     }
+                    isOn = true;
                     qDebug()<<"ON!";
                 }
             }
